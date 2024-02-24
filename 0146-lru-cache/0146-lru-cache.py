@@ -8,11 +8,11 @@ class doubly:
 
 class LRUCache:
 
+    # we use hmap for constant indexing
+    # we use doubly linkedlist for constant insertion and deletion
     def __init__(self, capacity: int):
         self.capacity = capacity
-        # we use hmap for contant lookup time
         self.hmap = {} 
-        # we use linkedlist for contant insertion and deletion
         self.head = doubly(0, 0) 
         self.tail = doubly(-1, -1)
         self.head.next = self.tail
@@ -23,9 +23,11 @@ class LRUCache:
         if key in self.hmap:
             node = self.hmap[key]
 
+            # delete node inplace
             node.prev.next = node.next
             node.next.prev = node.prev
-
+            
+            # insert node at head
             nextval = self.head.next
             self.head.next = node
             node.prev = self.head
@@ -41,22 +43,26 @@ class LRUCache:
         if key in self.hmap:
             node = self.hmap[key]
 
+            # delete node inplace
             node.prev.next = node.next
             node.next.prev = node.prev
 
+            # insert node at head
             nextval = self.head.next
             self.head.next = node
             node.prev = self.head
             node.next = nextval
             nextval.prev = node
 
+            # update node.val
             node.val = value
         
         elif len(self.hmap) >= self.capacity:
 
             node = self.tail.prev
+            self.tail.prev = self.node.prev
+            self.node.prev.next = self.tail
             del self.hmap[node.key]
-            self.tail.prev = self.tail.prev.prev
         
         node = doubly(key, value)
         self.hmap[key] = node
