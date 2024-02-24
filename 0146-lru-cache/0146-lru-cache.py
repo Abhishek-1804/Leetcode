@@ -5,73 +5,69 @@ class doubly:
         self.val = value
         self.next = None
         self.prev = None
-
+        
 class LRUCache:
 
-    # we use hmap for constant indexing
-    # we use doubly linkedlist for constant insertion and deletion
     def __init__(self, capacity: int):
+        
         self.capacity = capacity
-        self.hmap = {} 
-        self.head = doubly(0, 0) 
+        self.dic = dict()
+        self.head = doubly(0, 0)
         self.tail = doubly(-1, -1)
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def get(self, key: int) -> int:
         
-        if key in self.hmap:
-            node = self.hmap[key]
-
-            # delete node inplace
+        if key in self.dic:
+            node = self.dic[key]
+            
             node.prev.next = node.next
             node.next.prev = node.prev
             
-            # insert node at head
             nextval = self.head.next
             self.head.next = node
             node.prev = self.head
             node.next = nextval
             nextval.prev = node
-
+            
             return node.val
-
-        return -1    
+        
+        else:
+            return -1
 
     def put(self, key: int, value: int) -> None:
-
-        if key in self.hmap:
-            node = self.hmap[key]
-
-            # delete node inplace
+        
+        if key in self.dic:
+            node = self.dic[key]
+            
             node.prev.next = node.next
             node.next.prev = node.prev
-
-            # insert node at head
+            
             nextval = self.head.next
             self.head.next = node
             node.prev = self.head
             node.next = nextval
             nextval.prev = node
-
-            # update node.val
+            
             node.val = value
         
-        elif len(self.hmap) >= self.capacity:
+        else:
+            if len(self.dic) >= self.capacity:
+                
+                temp = self.tail.prev
+                self.tail.prev = temp.prev
+                temp.prev.next = self.tail
+                del self.dic[temp.key]
+                
+            node = doubly(key, value)
+            self.dic[key] = node
 
-            node = self.tail.prev
-            self.tail.prev = self.node.prev
-            self.node.prev.next = self.tail
-            del self.hmap[node.key]
-        
-        node = doubly(key, value)
-        self.hmap[key] = node
-
-        nextval = self.head.next
-        self.head.next = node
-        node.prev = self.head
-        node.next = nextval
-        nextval.prev = node
+            nextval = self.head.next
+            self.head.next = node
+            node.prev = self.head
+            node.next = nextval
+            nextval.prev = node
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
