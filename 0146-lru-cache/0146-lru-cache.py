@@ -57,21 +57,24 @@ class LRUCache:
             # update node.val
             node.val = value
         
-        elif len(self.hmap) >= self.capacity:
+        else:
+            # deleting LRU key
+            if len(self.hmap) >= self.capacity:
 
-            node = self.tail.prev
-            node.prev.next = self.tail
-            self.tail.prev = node.prev
-            del self.hmap[node.key]
-        
-        node = doubly(key, value)
-        self.hmap[key] = node
+                node = self.tail.prev
+                node.prev.next = self.tail
+                self.tail.prev = node.prev
+                del self.hmap[node.key]
 
-        nextval = self.head.next
-        self.head.next = node
-        node.prev = self.head
-        node.next = nextval
-        nextval.prev = node
+            # inserting new key at head
+            node = doubly(key, value)
+            self.hmap[key] = node
+
+            nextval = self.head.next
+            self.head.next = node
+            node.prev = self.head
+            node.next = nextval
+            nextval.prev = node
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
