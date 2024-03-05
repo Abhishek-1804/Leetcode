@@ -7,6 +7,9 @@
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
 
+        # purpose of inorder is to keep track of our left and right nodes, so we just need to track the indexes
+        # our value are always popped from postorder, we decide left or right node based on values in inorder
+
         inorderidx = {v:i for i,v in enumerate(inorder)}
 
         def helper(l, r):
