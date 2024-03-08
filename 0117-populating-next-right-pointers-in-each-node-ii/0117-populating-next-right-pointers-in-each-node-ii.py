@@ -11,23 +11,57 @@ class Node:
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
 
-        if not root:
-            return None
+        # sol2
+        def dfs(node):
             
-        queue = [root]
+            if not node:
+                return None
 
-        while queue:
-            size = len(queue)
-            
-            for i in range(size):
-                node = queue.pop(0)
-                if i < size - 1:
-                    node.next = queue[0]
+            scanner = node.next
+
+            while scanner:
+
+                if scanner.left:
+                    scanner = scanner.left
+                    break
                 
-                # Add children to the queue
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
+                if scanner.right:
+                    scanner = scanner.right
+                    break
+                
+                scanner = scanner.next
+            
+            if node.right:
+                node.right.next = scanner
+            
+            if node.left:
+                node.left.next = node.right if node.right else scanner
+            
+            dfs(node.right)
+            dfs(node.left)
+
+            return node
         
-        return root
+        return dfs(root)
+
+        ## sol 1 bfs approach
+        # if not root:
+        #     return None
+            
+        # queue = [root]
+
+        # while queue:
+        #     size = len(queue)
+            
+        #     for i in range(size):
+        #         node = queue.pop(0)
+        #         if i < size - 1:
+        #             node.next = queue[0]
+                
+        #         # Add children to the queue
+        #         if node.left:
+        #             queue.append(node.left)
+        #         if node.right:
+        #             queue.append(node.right)
+        
+        # return root
