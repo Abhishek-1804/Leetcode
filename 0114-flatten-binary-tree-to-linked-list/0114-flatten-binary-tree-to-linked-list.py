@@ -5,23 +5,36 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+        self.prev = None
+
     def flatten(self, root: Optional[TreeNode]) -> None:
         """
         Do not return anything, modify root in-place instead.
         """
+        # sol 2 - recursive solution
+        if not root:
+            return None
+        
+        self.flatten(root.right)
+        self.flatten(root.left)
+        root.right = self.prev
+        root.left = None
+        self.prev = root
 
-        curr = root
+        ## sol 1 - iterative solution
+        # curr = root
 
-        while curr:
+        # while curr:
            
-            if curr.left:
-                ltree = curr.left
+        #     if curr.left:
+        #         ltree = curr.left
     
-                while ltree.right:
-                    ltree = ltree.right
+        #         while ltree.right:
+        #             ltree = ltree.right
                 
-                ltree.right = curr.right
-                curr.right = curr.left
-                curr.left = None
+        #         ltree.right = curr.right
+        #         curr.right = curr.left
+        #         curr.left = None
 
-            curr = curr.right
+        #     curr = curr.right
