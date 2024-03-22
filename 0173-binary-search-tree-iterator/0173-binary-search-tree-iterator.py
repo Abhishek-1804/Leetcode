@@ -5,29 +5,22 @@
 #         self.left = left
 #         self.right = right
 class BSTIterator:
-
     def __init__(self, root: Optional[TreeNode]):
-        self.root = root
-        self.ans = []
-        self.dfs(root)
-        self.iterator = -1  # Keeps track of the current position
+        self.iter = self._inorder(root)
+        self.nxt = next(self.iter, None)
     
-    def dfs(self, node):
-        """Perform in-order traversal and store the values."""
-        if not node:
-            return
-        self.dfs(node.left)
-        self.ans.append(node.val)
-        self.dfs(node.right)
+    def _inorder(self, node: Optional[TreeNode]) -> Generator[int, None, None]:
+        if node:
+            yield from self._inorder(node.left)
+            yield node.val
+            yield from self._inorder(node.right)
 
     def next(self) -> int:
-        """Return the next smallest number."""
-        self.iterator += 1
-        return self.ans[self.iterator]
+        res, self.nxt = self.nxt, next(self.iter, None)
+        return res
 
     def hasNext(self) -> bool:
-        """Return whether we have a next smallest number."""
-        return self.iterator + 1 < len(self.ans)  
+        return self.nxt is not None
 
 
 # Your BSTIterator object will be instantiated and called as such:
