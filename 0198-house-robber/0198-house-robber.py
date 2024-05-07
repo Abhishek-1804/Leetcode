@@ -1,7 +1,6 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
 
-
         n = len(nums)
         
         dp = [None]*3
@@ -14,8 +13,13 @@ class Solution:
 
         for i in range(2, n):
             dp[2] = max(dp[1], nums[i]+dp[0])
-            dp.pop(0)
-            dp.append(None)
+            dp[0] = dp[1]
+            dp[1] = dp[2]
+
+        # for i in range(2, n):
+        #     dp[2] = max(dp[1], nums[i]+dp[0])
+        #     dp.pop(0)
+        #     dp.append(None)
 
         # p=[0]*(2)
         # p[1]=nums[0]
