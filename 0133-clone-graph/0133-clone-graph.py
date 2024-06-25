@@ -14,18 +14,17 @@ class Solution:
             return
         
         clone_map = {}
-        stack = [node]
+        queue = [node]
         clone_map[node] = Node(node.val)
 
-        while stack:
-            n = stack.pop()
+        while queue:
+            n = queue.pop(0)
 
             for neighbor in n.neighbors:
                 if neighbor not in clone_map:
                     clone_map[neighbor] = Node(neighbor.val)
-                    stack.append(neighbor)
+                    queue.append(neighbor)
                 
                 clone_map[n].neighbors.append(clone_map[neighbor])
 
-        
         return clone_map[node]
