@@ -20,7 +20,7 @@ class Solution:
                 if not dfs(neighbor): return False
             
             visited.remove(crs)
-            # adj[crs] = []
+            adj[crs] = []
             return True
         
         for crs in range(numCourses):
