@@ -7,7 +7,6 @@ class Solution:
             adj[x].append(y)
 
         state = [0]*numCourses
-
         def hasCycle(crs):
             if state[crs] == 1:
                 return False
