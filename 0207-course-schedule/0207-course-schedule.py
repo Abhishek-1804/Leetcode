@@ -1,30 +1,30 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 
-        adj = {}
+        adj = {i:[] for i in range(numCourses)}
 
-        for crs, pre in prerequisites:
-            if crs not in adj:
-                adj[crs] = []
-            adj[crs].append(pre)
-        
-        visited = set()
-        def dfs(crs):
-            if crs in visited:
+        for x,y in prerequisites:
+            adj[x].append(y)
+
+        state = [0]*numCourses
+
+        def hasCycle(crs):
+            if state[crs] == 1:
                 return False
-
-            if crs not in adj or adj[crs] == []:
+            
+            if state[crs] == -1:
                 return True
-            
-            visited.add(crs)
+
+            state[crs] = -1
             for neighbor in adj[crs]:
-                if not dfs(neighbor): return False
+                if hasCycle(neighbor):
+                    return True
             
-            visited.remove(crs)
-            adj[crs] = []
-            return True
+            state[crs] = 1
+            return False
         
-        for crs in adj:
-            if not dfs(crs): return False
-        
+        for crs in range(numCourses):
+            if hasCycle(crs):
+                return False
+            
         return True
