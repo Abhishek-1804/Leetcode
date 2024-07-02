@@ -1,31 +1,31 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        
-        adj = {i:[] for i in range(numCourses)}
+                
+        adj = {i:set() for i in range(numCourses)}
+        pre_to_crs = collections.defaultdict(set) 
 
         for x,y in prerequisites:
-            adj[x].append(y)
-
-        ans = []
-        state = [0]*numCourses
-        def hasCycle(crs):
-            if state[crs] == 1:
-                return False
-            
-            if state[crs] == -1:
-                return True
-
-            state[crs] = -1
-            for neighbor in adj[crs]:
-                if hasCycle(neighbor):
-                    return True
-            
-            state[crs] = 1
-            ans.append(crs)
-            return False
+            adj[x].add(y)
+            pre_to_crs[y].add(x)
         
-        for crs in range(numCourses):
-            if hasCycle(crs):
-                return []
-            
-        return ans
+        q = collections.deque([])
+        for crs, pre in adj.items():
+            if len(pre) == 0:
+                q.append(crs)
+        
+        ans = []
+        while q:
+            course = q.popleft()
+            ans.append(course)
+
+            if len(ans) == numCourses:
+                return ans
+
+            for crs in pre_to_crs[course]:
+
+                adj[crs].remove(course)
+
+                if not adj[crs]:
+                    q.append(crs)
+        
+        return []
