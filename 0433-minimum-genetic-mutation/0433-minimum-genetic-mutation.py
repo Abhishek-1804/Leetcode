@@ -10,7 +10,6 @@ class Solution:
         while q:
             curr_gene, mutations = q.popleft()
             
-            # Generate mutations by only changing characters that differ from the endGene
             for i in range(len(curr_gene)):
                 for char in gene_chars:
                     if curr_gene[i] != char:
@@ -20,6 +19,6 @@ class Solution:
                             if new_gene == endGene:
                                 return mutations+1
                             q.append((new_gene, mutations + 1))
-                            bank_set.remove(new_gene)  # Avoid re-processing
+                            bank_set.remove(new_gene)
             
         return -1
