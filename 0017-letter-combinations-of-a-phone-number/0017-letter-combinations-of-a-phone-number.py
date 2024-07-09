@@ -19,7 +19,7 @@ class Solution:
                 res.append(curStr)
                 return
         
-            for c in d[digits[i]]:
+            for c in d[next_digits[0]]:
                 dfs(next_digits[1:], curStr+c)
 
         if digits:
