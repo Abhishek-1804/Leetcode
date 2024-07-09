@@ -14,15 +14,15 @@ class Solution:
         
         res = []
 
-        def dfs(i, curStr):
-            if len(curStr) == len(digits):
+        def dfs(next_digits, curStr):
+            if not next_digits: 
                 res.append(curStr)
                 return
         
             for c in d[digits[i]]:
-                dfs(i+1, curStr+c)
+                dfs(next_digits[1:], curStr+c)
 
         if digits:
-            dfs(0, "")
+            dfs(digits, "")
 
         return res
