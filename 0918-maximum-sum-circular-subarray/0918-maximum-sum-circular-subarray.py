@@ -1,8 +1,8 @@
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
 
-        max_sum = float('-inf')
-        min_sum = float('inf')
+        max_sum = nums[0]
+        min_sum = nums[0]
         curr_max = nums[0]
         curr_min = nums[0]
 
