@@ -8,12 +8,15 @@ class Solution:
 
         while row_low < row_high:
             row_mid = (row_low + row_high) // 2
-
-            if target >= matrix[row_mid + 1][0]:
-                row_low = row_mid + 1
-            
+        
+            if target >= matrix[row_mid][0] and target <= matrix[row_mid][-1]:
+                # The target is within the range of this row
+                row_low = row_mid
+                break
+            elif target < matrix[row_mid][0]:
+                row_high = row_mid - 1
             else:
-                row_high = row_mid
+                row_low = row_mid + 1
         
         while col_low <= col_high:
             col_mid = (col_low + col_high) // 2
