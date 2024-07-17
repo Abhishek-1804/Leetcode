@@ -9,7 +9,6 @@ class Solution:
         while start < len(digits):
             if digits[start] != 9:
                 digits[start] += 1
-                start += 1
                 return digits[::-1]
         
             else:
