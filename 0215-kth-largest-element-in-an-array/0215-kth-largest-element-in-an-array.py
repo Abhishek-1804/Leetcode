@@ -1,9 +1,15 @@
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
 
-        heapq.heapify(nums)
-        largest = heapq.nlargest(k, nums)
-        return largest.pop()
+        heap = nums[:k]
+        heapq.heapify(heap)
+        
+        for num in nums[k:]:
+            if num > heap[0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, num)
+        
+        return heap[0]
 
         ## QuickSelect Solution (similar to quicksort; but fails for 1 test case)
         # k = len(nums) - k
