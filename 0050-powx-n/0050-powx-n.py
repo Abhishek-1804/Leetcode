@@ -14,8 +14,9 @@ class Solution:
             if n % 2 == 0:
                 n /= 2
                 x = x**2
-            
-            result *= x
-            n -= 1
-        
+                
+            else:
+                result *= x
+                n -= 1
+
         return result
