@@ -9,7 +9,6 @@ class Solution:
             n = -n
         
         result = 1
-        cur_val = 1
 
         while n > 0:
             if n % 2 == 0:
