@@ -21,7 +21,7 @@ class Solution:
         res = 0
 
         while ind >= 0:
-            if ind - 2 >= 0 and s[ind-1:ind+1] in roman_to_int:
+            if ind - 1 >= 0 and s[ind-1:ind+1] in roman_to_int:
                 res += roman_to_int[s[ind-1:ind+1]]
                 ind -= 2
             else:
