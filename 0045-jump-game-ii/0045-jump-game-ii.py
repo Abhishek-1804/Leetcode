@@ -1,35 +1,24 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
 
-        # # sol 1
-        # result = 0
-        # l = r = 0
-
-        # while r < len(nums) - 1:
-        #     furthest = 0
-
-        #     for i in range(l, r+1):
-        #         furthest = max(furthest, nums[i] + i)
-            
-        #     l = r+1
-        #     r = furthest
-        #     result += 1
-
-        # return result
-
-        # sol 2
-        result = 0
-        end = 0
-        farthest = 0
-
+        counter = 0
+        
         if len(nums) == 1:
             return 0
 
-        for i in range(len(nums) - 1):
-            farthest = max(farthest, nums[i] + i)
-            if farthest >= len(nums) - 1:
-                return result + 1
-            if i == end:
-                result += 1
-                end = farthest
+        q = deque([(0, 0)])
+        visited = set()
+
+        while q:
+            ind, count = q.popleft()
+            if ind == len(nums)-1:
+                return count
             
+            if nums[ind] == 0:
+                continue
+
+            for j in range(1, nums[ind] + 1):
+                jump = j + ind
+                if jump < len(nums) and jump not in visited:
+                    q.append((jump, count+1))
+                    visited.add(jump)
