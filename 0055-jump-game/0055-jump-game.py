@@ -1,24 +1,17 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
 
-        # sol 1: going backward and checking if we can move 1 forward
-        goal = len(nums) - 1
+        if len(nums) <= 1:
+            return True
 
-        for i in range(len(nums) - 1, -1, -1):
+        farthest = 0
 
-            if i + nums[i] >= goal:
-                goal = i
+        for i in range(len(nums)):
+            farthest = max(farthest, nums[i] + i)
+            if farthest >= len(nums)-1:
+                return True
+                
+            if i == farthest:
+                return False
         
-        return goal == 0
-
-        # # sol 2
-        # reachable = 0
-
-        # for i in range(len(nums)):
-
-        #     if reachable < i:
-        #         return False
-            
-        #     reachable = max(reachable, i + nums[i])
-        
-        # return True
+        return True
