@@ -5,15 +5,14 @@ class RandomizedSet:
         self.arr = []
 
     def insert(self, val: int) -> bool:
-        if val not in self.dict:
-            self.arr.append(val)
-            self.dict[val] = len(self.arr)-1
-            return True
-        return False
+        if val in self.dict:
+            return False
+        
+        self.dict[val] = len(self.arr)
+        self.arr.append(val)
+        return True
 
     def remove(self, val: int) -> bool:
-        [1, 2, 3, 4, 5]
-
         if val not in self.dict:
             return False
         
