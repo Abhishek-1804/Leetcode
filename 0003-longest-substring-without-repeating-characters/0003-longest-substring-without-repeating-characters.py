@@ -20,5 +20,4 @@ class Solution:
                 start += 1
         
         maxLen = max(maxLen, end - start)
-        
         return maxLen
