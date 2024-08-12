@@ -20,7 +20,7 @@ class Solution:
             for col in range(len(board[0])):
                 live_neighbors = self.helper(board, row, col)
                 
-                if self.helper(board, row, col) < 2 or self.helper(board, row, col) > 3:
+                if board[row][col] == 1 and (live_neighbors < 2 or live_neighbors > 3):
                     board[row][col] = -1
 
                 if board[row][col] == 0 and live_neighbors == 3:
