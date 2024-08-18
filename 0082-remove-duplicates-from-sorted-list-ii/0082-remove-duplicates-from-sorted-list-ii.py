@@ -6,7 +6,7 @@
 
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = ListNode(-101)
+        dummy = ListNode(-1)
         curr = dummy
         
         while head:
