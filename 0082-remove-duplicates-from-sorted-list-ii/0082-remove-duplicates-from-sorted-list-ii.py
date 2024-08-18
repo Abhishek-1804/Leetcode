@@ -21,4 +21,6 @@ class Solution:
                 curr = curr.next
                 head = head.next
         
+        curr.next = None
+        
         return dummy.next
