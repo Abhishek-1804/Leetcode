@@ -6,25 +6,24 @@
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        dummy = curr = ListNode(-101)
-        prev = curr.val
+        dummy = ListNode(-1)
         dummy.next = head
 
-        while head:
-            if not head.next:
-                if head.val == prev:
-                    curr.next = None
-                else:
-                    curr.next = head
+        curr = head
+        prev = dummy
 
-            elif head.val == prev or head.val == head.next.val:
-                prev = head.val
-
+        while curr:
+            # Check if the current node has a duplicate
+            if curr.next and curr.val == curr.next.val:
+                # Skip all nodes with the same value
+                while curr.next and curr.val == curr.next.val:
+                    curr = curr.next
+                # Link the previous node to the node after the last duplicate
+                prev.next = curr.next
             else:
-                curr.next = head
-                prev = head.val
-                curr = curr.next
+                # If no duplicate, just move the prev pointer to current
+                prev = curr
+            # Move current pointer forward in all cases
+            curr = curr.next
 
-            head = head.next
-        
         return dummy.next
