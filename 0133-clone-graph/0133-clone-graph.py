@@ -10,21 +10,24 @@ from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
 
-        if not node:
-            return
+        hmap = {}
+
+        def dfs(root):
+
+            if not root:
+                return
+
+            if root in hmap:
+                return hmap[root]
+
+            copy = Node(root.val)
+            
+            if root not in hmap:
+                hmap[root] = copy
+            
+            for neighbor in root.neighbors:
+                copy.neighbors.append(dfs(neighbor))
+            
+            return copy
         
-        clone_map = {}
-        queue = [node]
-        clone_map[node] = Node(node.val)
-
-        while queue:
-            n = queue.pop(0)
-
-            for neighbor in n.neighbors:
-                if neighbor not in clone_map:
-                    clone_map[neighbor] = Node(neighbor.val)
-                    queue.append(neighbor)
-                
-                clone_map[n].neighbors.append(clone_map[neighbor])
-
-        return clone_map[node]
+        return dfs(node)
