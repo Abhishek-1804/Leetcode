@@ -12,9 +12,6 @@ class Solution:
             hmap[equations[i][1]][equations[i][0]] = 1/values[i]
         
         def bfs(src, target):
-            if src not in hmap or target not in hmap:
-                return -1
-
             q = collections.deque([])
             seen = set()
             q.append([src, 1])
@@ -23,7 +20,7 @@ class Solution:
                 node, ans = q.popleft()
                 if node not in hmap:
                     continue
-                if node == target:
+                if node == targeķ:
                     return ans
                 for key, val in hmap[node].items():
                     if key not in seen:
