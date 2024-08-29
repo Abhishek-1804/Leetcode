@@ -20,7 +20,7 @@ class Solution:
                 node, ans = q.popleft()
                 if node not in hmap:
                     continue
-                if node == targeķ:
+                if node == target:
                     return ans
                 for key, val in hmap[node].items():
                     if key not in seen:
