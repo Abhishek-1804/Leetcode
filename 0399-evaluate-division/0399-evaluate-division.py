@@ -1,39 +1,35 @@
-from collections import deque
-from typing import List
-
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
         
-        graph = {}
+        hmap = {}
 
-        for (u,v), val in zip(equations, values):
-            if u not in graph:
-                graph[u] = {}
-            if v not in graph:
-                graph[v] = {}
-            
-            graph[u][v] = val
-            graph[v][u] = 1/val
-
+        for i in range(len(equations)):
+            if equations[i][0] not in hmap:
+                hmap[equations[i][0]] = {}
+            if equations[i][1] not in hmap:
+                hmap[equations[i][1]] = {}
+            hmap[equations[i][0]][equations[i][1]] = values[i]
+            hmap[equations[i][1]][equations[i][0]] = 1/values[i]
+        
         def bfs(src, target):
-
-            if src not in graph or target not in graph:
+            if src not in hmap or target not in hmap:
                 return -1
-            
-            q, visit = deque(), set()
-            q.append([src, 1])
-            visit.add(src)
-            
-            while q:
-                n, w = q.popleft()
-                if n == target:
-                    return w
-                
-                for neighbor, weight in graph[n].items():
-                    if neighbor not in visit:
-                        q.append([neighbor, w*weight])
-                        visit.add(neighbor)
 
+            q = collections.deque([])
+            seen = set()
+            q.append([src, 1])
+
+            while q:
+                node, ans = q.popleft()
+                if node not in hmap:
+                    continue
+                if node == target:
+                    return ans
+                for key, val in hmap[node].items():
+                    if key not in seen:
+                        seen.add(key)
+                        q.append([key, val*ans])
+            
             return -1
         
         return [bfs(q[0], q[1]) for q in queries]
