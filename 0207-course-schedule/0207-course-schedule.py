@@ -1,29 +1,30 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 
-        adj = {i:[] for i in range(numCourses)}
-
-        for x,y in prerequisites:
-            adj[x].append(y)
-
-        state = [0]*numCourses
-        def hasCycle(crs):
-            if state[crs] == 1:
+        adj = {i: [] for i in range(numCourses)}
+        
+        # Building the adjacency list
+        for crs, pre in prerequisites:
+            adj[crs].append(pre)
+        
+        visited = set()
+        def dfs(crs):
+            if crs in visited:
                 return False
             
-            if state[crs] == -1:
+            if adj[crs] == []:
                 return True
 
-            state[crs] = -1
+            visited.add(crs)
             for neighbor in adj[crs]:
-                if hasCycle(neighbor):
-                    return True
+                if not dfs(neighbor): return False
             
-            state[crs] = 1
-            return False
+            visited.remove(crs)
+            adj[crs] = []
+            return True
         
         for crs in range(numCourses):
-            if hasCycle(crs):
+            if not dfs(crs):
                 return False
-            
+        
         return True
