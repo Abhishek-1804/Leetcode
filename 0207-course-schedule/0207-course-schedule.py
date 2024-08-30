@@ -17,7 +17,7 @@ class Solution:
 
             visited.add(crs)
             for i in adj[crs]:
-                if dfs(i):
+                if has_cycle(i):
                     return True
 
             visited.remove(crs)
