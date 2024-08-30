@@ -13,7 +13,7 @@ class Solution:
         def has_cycle(crs):
             if crs in cycle:
                 return True
-            if crs in visit:
+            if crs in ans:
                 return False
             
             cycle.add(crs)
@@ -22,7 +22,6 @@ class Solution:
                     return True
 
             cycle.remove(crs)
-            visit.add(crs)
             ans.append(crs)
             return False
         
