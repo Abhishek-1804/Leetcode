@@ -12,22 +12,23 @@ class Solution:
 
         visited = set()
 
-        def dfs(course):
+        def has_cycle(course):
             if not hmap[course]:
                 return False
+
             if course in visited:
                 return True
             
             visited.add(course)
             for i in hmap[course]:
-                if dfs(i):
+                if has_cycle(i):
                     return True
+
             visited.remove(course)
-            hmap[course] = []
             return False
 
         for dependent, independent in prerequisites:
-            if dfs(dependent):
+            if has_cycle(dependent):
                 return False
 
         return True
