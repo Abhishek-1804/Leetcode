@@ -1,31 +1,32 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-                
-        adj = {i:set() for i in range(numCourses)}
-        pre_to_crs = collections.defaultdict(set) 
-
-        for x,y in prerequisites:
-            adj[x].add(y)
-            pre_to_crs[y].add(x)
         
-        q = collections.deque([])
-        for crs, pre in adj.items():
-            if len(pre) == 0:
-                q.append(crs)
+        adj = defaultdict(list)
+        pre_to_crs = defaultdict(list)
+
+        for x, y in prerequisites:
+            adj[x].append(y)
+            pre_to_crs[y].append(x)
         
         ans = []
+        q = collections.deque([])
+
+        for key, val in adj.items():
+            if not val:
+                q.append(key)
+        
         while q:
-            course = q.popleft()
-            ans.append(course)
+            crs = q.popleft()
+            ans.append(crs)
 
             if len(ans) == numCourses:
                 return ans
 
-            for crs in pre_to_crs[course]:
+            for i in pre_to_crs[crs]:
+                adj[i].remove(crs)
 
-                adj[crs].remove(course)
-
-                if not adj[crs]:
-                    q.append(crs)
+                if not adj[i]:
+                    q.append(i)
         
         return []
+
