@@ -1,30 +1,34 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 
-        adj = {i: [] for i in range(numCourses)}
-        
-        # Building the adjacency list
-        for crs, pre in prerequisites:
-            adj[crs].append(pre)
-        
-        visited = set()
-        def dfs(crs):
-            if crs in visited:
-                return False
-            
-            if adj[crs] == []:
-                return True
+        hmap = {}
 
-            visited.add(crs)
-            for neighbor in adj[crs]:
-                if not dfs(neighbor): return False
-            
-            visited.remove(crs)
-            adj[crs] = []
-            return True
-        
-        for crs in range(numCourses):
-            if not dfs(crs):
+        for dependent, independent in prerequisites:
+            if dependent not in hmap:
+                hmap[dependent] = []
+            if independent not in hmap:
+                hmap[independent] = []
+            hmap[dependent].append(independent)
+
+        visited = set()
+
+        def dfs(course):
+            if not hmap[course]:
+                return True
+            if course in visited:
                 return False
-        
+            
+            visited.add(course)
+            for i in hmap[course]:
+                if not dfs(i):
+                    return False
+            visited.remove(course)
+            hmap[course] = []
+            return True
+            
+
+        for dependent, independent in prerequisites:
+            if not dfs(dependent):
+                return False
+
         return True
