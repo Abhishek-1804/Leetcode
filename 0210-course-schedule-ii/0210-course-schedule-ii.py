@@ -1,8 +1,8 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         
-        adj = defaultdict(list)
-        pre_to_crs = defaultdict(list)
+        adj = {i:[] for i in range(numCourses)}
+        pre_to_crs = {i:[] for i in range(numCourses)}
 
         for x, y in prerequisites:
             adj[x].append(y)
