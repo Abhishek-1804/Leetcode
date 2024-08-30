@@ -14,21 +14,20 @@ class Solution:
 
         def dfs(course):
             if not hmap[course]:
-                return True
-            if course in visited:
                 return False
+            if course in visited:
+                return True
             
             visited.add(course)
             for i in hmap[course]:
-                if not dfs(i):
-                    return False
+                if dfs(i):
+                    return True
             visited.remove(course)
             hmap[course] = []
-            return True
-            
+            return False
 
         for dependent, independent in prerequisites:
-            if not dfs(dependent):
+            if dfs(dependent):
                 return False
 
         return True
