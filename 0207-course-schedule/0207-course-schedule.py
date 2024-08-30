@@ -1,34 +1,32 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        
+        adj = {i:[] for i in range(numCourses)}
 
-        hmap = {}
-
-        for dependent, independent in prerequisites:
-            if dependent not in hmap:
-                hmap[dependent] = []
-            if independent not in hmap:
-                hmap[independent] = []
-            hmap[dependent].append(independent)
-
+        for crs, pre in prerequisites:
+            adj[crs].append(pre)
+        
         visited = set()
-
-        def has_cycle(course):
-            if not hmap[course]:
+        
+        def has_cycle(crs):
+            if not adj[crs]:
                 return False
 
-            if course in visited:
+            if crs in visited:
                 return True
-            
-            visited.add(course)
-            for i in hmap[course]:
-                if has_cycle(i):
+
+            visited.add(crs)
+            for i in adj[crs]:
+                if dfs(i):
                     return True
 
-            visited.remove(course)
-            return False
+            visited.remove(crs)
+            adj[crs] = []
+            return False           
 
-        for dependent, independent in prerequisites:
-            if has_cycle(dependent):
+        
+        for crs, pre in prerequisites:
+            if has_cycle(crs):
                 return False
-
+        
         return True
