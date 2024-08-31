@@ -19,19 +19,21 @@ class WordDictionary:
         curr.endOfWord = True
 
     def search(self, word: str) -> bool:
+        stack = [(self.head, 0)]
 
-        def dfs(node, i):
+        while stack:
+            node, i = stack.pop()
             if i == len(word):
                 return node.endOfWord
-            
-            if word[i] == '.':
-                for child in node.children.values():
-                    if dfs(child, i+1): return True
+            continue
+
             if word[i] in node.children:
-                    return dfs(node.children[word[i]], i+1)
-            return False
+                stack.append((node.children[word[i]], i+1))
+            elif word[i] == '.':
+                for child in node.children.values():
+                    stack.append((child, i+1))
         
-        return dfs(self.head, 0)
+        return False
 
 
 # Your WordDictionary object will be instantiated and called as such:
