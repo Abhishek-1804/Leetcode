@@ -23,9 +23,11 @@ class WordDictionary:
 
         while stack:
             node, i = stack.pop()
+
             if i == len(word):
-                return node.endOfWord
-            continue
+                if node.endOfWord:
+                    return True
+                continue
 
             if word[i] in node.children:
                 stack.append((node.children[word[i]], i+1))
