@@ -1,28 +1,28 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        
-        d = {
-            '2' : 'abc',
-            '3' : 'def',
-            '4' : 'ghi',
-            '5' : 'jkl',
-            '6' : 'mno',
-            '7' : 'pqrs',
-            '8' : 'tuv',
-            '9' : 'wxyz'
+
+        hmap = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz',
         }
-        
-        res = []
 
-        def dfs(next_digits, curStr):
-            if not next_digits: 
-                res.append(curStr)
+        output = []
+
+        def backtrack(temp_str, i):
+            if len(temp_str) == len(digits):
+                output.append(temp_str)
                 return
+            
+            for c in hmap[digits[i]]:
+                backtrack(temp_str + c, i+1)
         
-            for c in d[next_digits[0]]:
-                dfs(next_digits[1:], curStr+c)
-
         if digits:
-            dfs(digits, "")
+            backtrack("", 0)
 
-        return res
+        return output
