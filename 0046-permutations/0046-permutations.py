@@ -2,8 +2,9 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
 
         output = []
+        temp = []
 
-        def backtrack(temp):
+        def backtrack():
             if len(temp) == len(nums):
                 output.append(temp[:])
                 return
@@ -12,8 +13,8 @@ class Solution:
                 if i in temp:
                     continue
                 temp.append(i)
-                backtrack(temp)
+                backtrack()
                 temp.pop()
         
-        backtrack([])
+        backtrack()
         return output
