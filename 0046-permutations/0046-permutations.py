@@ -1,16 +1,19 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
 
-        if len(nums) == 0:
-            return [[]]
-        
-        res = []
+        output = []
 
-        for p in self.permute(nums[1:]):
-            for i in range(len(p) + 1):
-                p_copy = p.copy()
-                p_copy.insert(i, nums[0])
-                res.append(p_copy)
+        def backtrack(temp):
+            if len(temp) == len(nums):
+                output.append(temp[:])
+                return
+            
+            for i in nums:
+                if i in temp:
+                    continue
+                temp.append(i)
+                backtrack(temp)
+                temp.pop()
         
-        return res
-
+        backtrack([])
+        return output
