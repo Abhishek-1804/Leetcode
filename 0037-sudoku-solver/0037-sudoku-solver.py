@@ -3,6 +3,8 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
+        n = len(board)
+
         def is_valid(row, col, num):
             for i in range(0, 9):
                 if board[row][i] == str(num):
@@ -20,8 +22,8 @@ class Solution:
             return True
 
         def backtrack(board):
-            for row in range(len(board)):
-                for col in range(len(board)):
+            for row in range(n):
+                for col in range(n):
                     if board[row][col] == '.':
                         for i in range(1, 10):
                             if is_valid(row, col, i):
