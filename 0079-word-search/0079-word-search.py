@@ -1,30 +1,31 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-
-        visited = set()
         
-        def backtrack(i, j, pos):
-            if pos == len(word):
+        rows = len(board)
+        cols = len(board[0])
+
+        def dfs(r, c, counter):
+            if counter == len(word):
                 return True
             
-            if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or (i, j) in visited or board[i][j] != word[pos]:
+            if r < 0 or r >= rows or c < 0 or c >= cols or board[r][c] != word[counter]:
                 return False
             
-            visited.add((i, j))
+            temp = board[r][c]
+            board[r][c] = '#'
             
-            # Explore all four possible directions
-            if (backtrack(i-1, j, pos + 1) or  # Up
-                backtrack(i+1, j, pos + 1) or  # Down
-                backtrack(i, j-1, pos + 1) or  # Left
-                backtrack(i, j+1, pos + 1)):   # Right
-                return True
+            found = (dfs(r + 1, c, counter + 1) or
+                     dfs(r - 1, c, counter + 1) or
+                     dfs(r, c + 1, counter + 1) or
+                     dfs(r, c - 1, counter + 1))
             
-            visited.remove((i, j))
-            return False
-        
-        for row in range(len(board)):
-            for col in range(len(board[0])):
-                if board[row][col] == word[0]:
-                    if backtrack(row, col, 0): return True
+            board[r][c] = temp
+
+            return found
+
+        for r in range(rows):
+            for c in range(cols):
+                if dfs(r, c, 0):
+                    return True
         
         return False
