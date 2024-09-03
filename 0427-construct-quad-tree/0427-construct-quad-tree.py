@@ -13,16 +13,18 @@ class Node:
 class Solution:
     def construct(self, grid: List[List[int]]) -> 'Node':
 
+        n = len(grid)
         head = Node(grid[0][0], 1)
-        for row in range(len(grid)):
-            for col in range(len(grid)):
+
+        for row in range(n):
+            for col in range(n):
                 if grid[row][col] != grid[0][0]:
                     head.isLeaf = 0
                     break
         if head.isLeaf:
             return head
 
-        mid = len(grid) // 2
+        mid = n // 2
         topLeftGrid = [row[:mid] for row in grid[:mid]]
         topRightGrid = [row[mid:] for row in grid[:mid]]
         bottomLeftGrid = [row[:mid] for row in grid[mid:]]
