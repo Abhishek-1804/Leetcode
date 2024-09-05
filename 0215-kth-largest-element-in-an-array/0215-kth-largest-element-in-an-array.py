@@ -36,7 +36,7 @@ class MinHeap:
         return top_val
 
 class Solution:
-    def findKthLargest(self, nums: List[int], k: int) -> int:
+    def findKthLargest1(self, nums: List[int], k: int) -> int:
         
         h = MinHeap()
         for num in nums:
@@ -46,3 +46,15 @@ class Solution:
             h.heap_pop()
         
         return -h.heap_pop()
+    
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        import heapq
+        # Step 1: Heapify the entire array
+        heapq.heapify(nums)
+        
+        # Step 2: Pop elements len(nums) - k times to reach the k-th largest
+        for _ in range(len(nums) - k):
+            heapq.heappop(nums)
+        
+        # The root of the heap is now the k-th largest element
+        return nums[0]
