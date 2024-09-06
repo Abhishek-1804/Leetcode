@@ -13,7 +13,4 @@ class Solution:
             if bits[i] % 3 != 0:
                 result |= 1 << i
         
-        if bit_sum[31] % 3 != 0:
-            result -= (1 << 32)
-        
         return result
