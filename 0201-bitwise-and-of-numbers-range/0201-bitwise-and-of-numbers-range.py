@@ -1,6 +1,6 @@
 class Solution:
     def rangeBitwiseAnd(self, left: int, right: int) -> int:
-
+        
         cnt = 0
 
         while left != right:
