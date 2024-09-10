@@ -4,7 +4,7 @@ class Solution:
         
         tails = []
 
-        for num in nums
+        for num in nums:
             idx = bisect.bisect_left(tails, num)
             if idx == len(tails):
                 tails.append(num)
