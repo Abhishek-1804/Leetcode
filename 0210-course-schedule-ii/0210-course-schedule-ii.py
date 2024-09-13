@@ -1,32 +1,33 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-                 
+
+        ans = []
+
         adj = {i:[] for i in range(numCourses)}
 
-        for crs, pre in prerequisites:
-            adj[crs].append(pre)
+        for crs in prerequisites:
+            adj[crs[0]].append(crs[1])
         
-        cycle = set()
-        visit = set()
-        ans = []
-        
-        def has_cycle(crs):
-            if crs in cycle:
+        status = [0] * numCourses
+        def hasCycle(crs):
+            if status[crs] == -1:
                 return True
-            if crs in ans:
-                return False
             
-            cycle.add(crs)
-            for i in adj[crs]:
-                if has_cycle(i):
-                    return True
+            if status[crs] == 2:
+                return False
 
-            cycle.remove(crs)
+            status[crs] = -1
+            for pre in adj[crs]:
+                if hasCycle(pre):
+                    return True
+            
+            status[crs] = 2
             ans.append(crs)
             return False
-        
-        for crs in range(numCourses):
-            if has_cycle(crs):
+            
+
+        for i in range(numCourses):
+            if hasCycle(i):
                 return []
         
         return ans
