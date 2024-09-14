@@ -2,16 +2,17 @@ class Solution:
     def xorQueries(self, arr: List[int], queries: List[List[int]]) -> List[int]:
 
         ans = []
-        cache = {}
-
+        prefix = [arr[0]]
+        temp = arr[0]
+        
+        for num in arr[1:]:
+            temp ^= num
+            prefix.append(temp)
+        
         for left, right in queries:
-            if (left, right) in cache:
-                ans.append(cache[(left, right)])
+            if left == 0:
+                ans.append(prefix[right])
             else:
-                temp_ans = arr[left]
-                for ele in range(left+1, right+1, 1):
-                    temp_ans ^= arr[ele]
-                cache[(left, right)] = temp_ans
-                ans.append(temp_ans)
+                ans.append(prefix[right] ^ prefix[left-1])
         
         return ans
