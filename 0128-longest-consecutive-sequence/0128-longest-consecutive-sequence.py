@@ -13,6 +13,7 @@ class Solution:
                 total = 1 + left + right
                 hmap[num-left] = total
                 hmap[num+right] = total
+                hmap[num] = total
                 maxLen = max(maxLen, total)
         
         return maxLen
