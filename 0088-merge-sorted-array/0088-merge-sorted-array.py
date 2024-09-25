@@ -1,35 +1,21 @@
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
-      """
-      Do not return anything, modify nums1 in-place instead.
-      """
-      
-      if m == 0:
-        nums1[:] = nums2[:]
-        return
-        
-      if n == 0:
-        return
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        if not nums2:
+            return nums1
 
-      p = m - 1
-      q = n - 1
-      curr_index = m + n - 1
-
-      while p >= 0 and q >= 0:
+        while m > 0 and n > 0:
+            if nums1[m - 1] > nums2[n - 1]:
+                nums1[m + n - 1] = nums1[m - 1]
+                m -= 1
+            else:
+                nums1[m + n - 1] = nums2[n - 1]
+                n -= 1
         
-        if nums1[p] > nums2[q]:
-          nums1[curr_index] = nums1[p]
-          p -= 1
+        while n > 0:
+            nums1[m + n - 1] = nums2[n - 1]
+            n -=1 
         
-        else:
-          nums1[curr_index] = nums2[q]
-          q -= 1
-
-        curr_index -= 1
-        
-      while q >= 0:
-        nums1[curr_index] = nums2[q]
-        q -= 1
-        curr_index -= 1
-    
-  
+        return nums1
