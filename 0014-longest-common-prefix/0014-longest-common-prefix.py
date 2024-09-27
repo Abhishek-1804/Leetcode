@@ -25,8 +25,8 @@ class Solution:
                 head = head.children[c]
                 length_ += 1
             
-            ans = ans[:length_]
             if not length_:
                 return ""
+            ans = ans[:length_]
                 
         return ans
