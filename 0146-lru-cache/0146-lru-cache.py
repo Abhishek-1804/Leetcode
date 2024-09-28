@@ -1,55 +1,66 @@
 class Doubly:
-
-    def __init__(self, k, val, prev = None, nxt = None):
+    def __init__(self, k = -1, v = -1, next = None, prev = None):
         self.k = k
-        self.val = val
+        self.v = v
+        self.next = next
         self.prev = prev
-        self.nxt = nxt
 
 class LRUCache:
 
     def __init__(self, capacity: int):
+        self.head = Doubly()
+        self.tail = Doubly()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.counter = 0
         self.capacity = capacity
-        self.hmap = {}
-        self.head = Doubly(0, 0)
-        self.tail = Doubly(-1, -1)
-        self.head.nxt = self.tail
-        self.tail.prev = self.head        
-
+        self.d = {}
+        
     def get(self, key: int) -> int:
-        if key not in self.hmap:
+        if key not in self.d:
             return -1
-        node = self.hmap[key]
-        node.prev.nxt = node.nxt
-        node.nxt.prev = node.prev
-        self.tail.prev.nxt = node
+        node = self.d[key]
+
+        node.next.prev = node.prev
+        node.prev.next = node.next
+        
+        self.tail.prev.next = node
         node.prev = self.tail.prev
+        node.next = self.tail
         self.tail.prev = node
-        node.nxt = self.tail
-        return node.val
+        return node.v
 
     def put(self, key: int, value: int) -> None:
-        if key in self.hmap:
-            node = self.hmap[key]
-            node.prev.nxt = node.nxt
-            node.nxt.prev = node.prev
-            self.tail.prev.nxt = node
+        if key in self.d:
+            node = self.d[key]
+    
+            node.next.prev = node.prev
+            node.prev.next = node.next
+            
+            self.tail.prev.next = node
             node.prev = self.tail.prev
+            node.next = self.tail
             self.tail.prev = node
-            node.nxt = self.tail
-        
+            node.v = value
+
         else:
-            if len(self.hmap) == self.capacity:
-                n = self.head.nxt
-                self.head.nxt = n.nxt
-                n.nxt.prev = self.head
-                del self.hmap[n.k]
+            if self.counter == self.capacity:
+                temp = self.head.next
+                self.head.next = temp.next
+                self.head.next.prev = self.head
+                del self.d[temp.k]
+                self.counter -= 1
             node = Doubly(key, value)
-            self.hmap[key] = node
-            self.tail.prev.nxt = node
+            self.d[key] = node
+            self.tail.prev.next = node
             node.prev = self.tail.prev
+            node.next = self.tail
             self.tail.prev = node
-            node.nxt = self.tail
+            self.counter += 1
+    
+    
+        
+
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
