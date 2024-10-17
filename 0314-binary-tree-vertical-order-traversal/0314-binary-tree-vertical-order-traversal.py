@@ -9,7 +9,7 @@ class Solution:
         d = {}
 
         if not root:
-            return
+            return []
 
         q = [(root, 0)]
 
