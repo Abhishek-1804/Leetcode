@@ -12,10 +12,12 @@ class Solution:
         start, end = 0, len(self.w)-1
         while start < end:
             mid = (start+end) // 2
-            if self.w[mid] < randNum:
+            if self.w[mid] == randNum:
+                return mid
+            elif self.w[mid] < randNum:
                 start = mid + 1
             else:
-                end = mid
+                end = mid - 1
         
         return start
 
