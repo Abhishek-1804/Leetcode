@@ -13,9 +13,9 @@ class Solution:
         while start < end:
             mid = (start+end) // 2
             if self.w[mid] < randNum:
-                end = mid
-            else:
                 start = mid + 1
+            else:
+                end = mid
         
         return start
 
