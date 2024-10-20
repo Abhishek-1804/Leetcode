@@ -9,20 +9,20 @@ class Solution:
         
         if not root:
             return []
-        
-        ans = []
-        queue = [root]
 
-        while queue:
-            ans.append(queue[-1].val)
-            q_len = len(queue)
-
-            for _ in range(0, q_len):
-                if queue[0].left:
-                    queue.append(queue[0].left)
-                if queue[0].right:
-                    queue.append(queue[0].right)
-                
-                queue.pop(0)
+        q = collections.deque([root])
+        answer = []
         
-        return ans
+        while q:
+            l = len(q)
+            answer.append(q[-1].val)
+
+            while l > 0:
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+                l -= 1
+        
+        return answer
