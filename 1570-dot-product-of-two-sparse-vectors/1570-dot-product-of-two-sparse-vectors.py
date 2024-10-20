@@ -9,7 +9,6 @@ class SparseVector:
             result += i*j
         
         return result
-        
 
 # Your SparseVector object will be instantiated and called as such:
 # v1 = SparseVector(nums1)
