@@ -2,22 +2,20 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         
         output = []
-        temp_str = ''
 
-        def backtrack(opening, closing):
-            nonlocal temp_str
-            if opening == closing == n:
-                output.append(temp_str)
+        o = c = n
+
+        def dfs(o, c, s):
+
+            if o == 0 and c == 0:
+                output.append(s)
                 return
             
-            if opening < n:
-                temp_str += '('
-                backtrack(opening+1, closing)
-                temp_str = temp_str[:-1]
-            if closing < opening:
-                temp_str += ')'
-                backtrack(opening, closing+1)
-                temp_str = temp_str[:-1]
+            if o > 0:
+                dfs(o-1, c, s+'(')
+            
+            if c > o:
+                dfs(o, c-1, s+')')
 
-        backtrack(0, 0)
+        dfs(o, c, "")
         return output
