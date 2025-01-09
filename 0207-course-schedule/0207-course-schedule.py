@@ -3,30 +3,28 @@ class Solution:
         
         adj = {i:[] for i in range(numCourses)}
 
-        for crs, pre in prerequisites:
-            adj[crs].append(pre)
+        for crs in prerequisites:
+            adj[crs[1]].append(crs[0])
+
+        seen = set()
         
-        visited = set()
-        
-        def has_cycle(crs):
-            if not adj[crs]:
+        def has_cycle(key):
+            if not adj[key]:
                 return False
-
-            if crs in visited:
+            
+            if key in seen:
                 return True
-
-            visited.add(crs)
-            for i in adj[crs]:
-                if has_cycle(i):
+            
+            seen.add(key)
+            for neighbor in adj[key]:
+                if has_cycle(neighbor):
                     return True
-
-            visited.remove(crs)
-            adj[crs] = []
-            return False           
-
-        
-        for crs, pre in prerequisites:
-            if has_cycle(crs):
+            seen.remove(key)
+            adj[key] = []
+            return False
+            
+        for key, val in adj.items():
+            if has_cycle(key):
                 return False
         
         return True
