@@ -13,7 +13,7 @@ class Solution:
 
         carry = 0
 
-        while l1 or l2:
+        while l1 or l2 or carry:
             total = 0
 
             total += l1.val if l1 else 0
@@ -30,9 +30,6 @@ class Solution:
             head.next = ListNode(total%10)
             carry = total // 10
             head = head.next
-        
-        if carry:
-            head.next = ListNode(1)
         
         return dummy.next
         
