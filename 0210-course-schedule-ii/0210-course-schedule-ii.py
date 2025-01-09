@@ -1,33 +1,38 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-
-        ans = []
-
-        adj = {i:[] for i in range(numCourses)}
-
-        for crs in prerequisites:
-            adj[crs[0]].append(crs[1])
         
-        status = [0] * numCourses
-        def hasCycle(crs):
-            if status[crs] == -1:
-                return True
-            
-            if status[crs] == 2:
-                return False
-
-            status[crs] = -1
-            for pre in adj[crs]:
-                if hasCycle(pre):
-                    return True
-            
-            status[crs] = 2
-            ans.append(crs)
-            return False
-            
-
-        for i in range(numCourses):
-            if hasCycle(i):
-                return []
+        # Initialize adjacency list to map each course to its dependent courses
+        adj_list = {i: [] for i in range(numCourses)}
         
-        return ans
+        # Populate adjacency list with dependencies
+        for crs, pre in prerequisites:
+            adj_list[pre].append(crs)
+        
+        # Initialize indegree array to count prerequisites for each course
+        indegree = [0] * numCourses
+        
+        # Update indegree based on adjacency list
+        for neighbors in adj_list.values():
+            for neighbor in neighbors:
+                indegree[neighbor] += 1
+
+        print(indegree)
+        print(adj_list)
+
+        q = deque([])
+        output = []
+
+        for numOfPre in range(len(indegree)):
+            if indegree[numOfPre] == 0:
+                q.append(numOfPre)
+        
+        while q:
+            pre = q.popleft()
+            output.append(pre)
+
+            for crs in adj_list[pre]:
+                indegree[crs] -= 1
+                if indegree[crs] == 0:  # Add to queue only if no prerequisites remain
+                    q.append(crs)
+
+        return output if len(output) == numCourses else []
