@@ -8,16 +8,17 @@ class Solution:
         dummy = Trie()
         head = dummy
 
-        for c in strs[0]:
-            head.children[c] = Trie()
-            head = head.children[c]
+        for let in strs[0]:
+            head.children[let] = Trie()
+            head = head.children[let]
+        
         head.endOfWord = True
 
         ans = strs[0]
-
+        
         for word in strs[1:]:
-            head = dummy
             length_ = 0
+            head = dummy
 
             for c in word:
                 if c not in head.children:
@@ -27,6 +28,7 @@ class Solution:
             
             if not length_:
                 return ""
+            
             ans = ans[:length_]
-                
+        
         return ans
