@@ -1,20 +1,20 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        cum_sum = 0
-        sum_count = {0:1}
+        
+        prefix = {0:1}
         ans = 0
 
-        for num in nums:
-            cum_sum += num
+        curr_sum = 0
 
-            # Check if there is a subarray (ending at the current index) that sums to k
-            if (cum_sum - k) in sum_count:
-                ans += sum_count[cum_sum - k]
-            
-            # Update the count of the current cumulative sum
-            if cum_sum not in sum_count:
-                sum_count[cum_sum] = 1
+        for i in range(len(nums)):
+            curr_sum += nums[i]
+
+            if curr_sum - k in prefix:
+                ans += prefix[curr_sum - k]
+
+            if curr_sum not in prefix:
+                prefix[curr_sum] = 1
             else:
-                sum_count[cum_sum] += 1
-        
+                prefix[curr_sum] += 1
+            
         return ans
