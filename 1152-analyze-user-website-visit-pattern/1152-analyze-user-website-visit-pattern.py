@@ -1,29 +1,23 @@
 class Solution:
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
         
-        # SORT THE WEBSITE INFO BASED ON THE TIMESTAMPS
         webInfo = []
-        for time, usr, web in zip(timestamp, username, website):
-            webInfo.append((time, usr, web))
-            
-        webInfo.sort(key=lambda x:x[0])
-        # print(webInfo)
+
+        for u, t, w in zip(username, timestamp, website):
+            webInfo.append((u, t, w))
         
-        # FIND THE WEBSITES VISITED BY PARTICULAR USERS
+        webInfo.sort(key=lambda x: x[1])
+
         websiteVisit = defaultdict(list)
-        for _, usr, web in webInfo:
-            websiteVisit[usr].append(web)
-            
-        # print(websiteVisit)
-        # FIND THE ROUTES IN THE FORM OF TUPLES OF LENGTH 3
+        for u, t, w in webInfo:
+            websiteVisit[u].append(w)
+        
         possibleTuples = defaultdict(int)
         for usr in websiteVisit:
             webRoutes = set(combinations(websiteVisit[usr], 3))
             for webRoute in webRoutes:
                 possibleTuples[webRoute] += 1
-        
-        # print(possibleTuples)
-        # FIND MAX VALUE OF USERS VISITED
+
         maxVal, routes = max(possibleTuples.values()), []
         for r, val in possibleTuples.items():
             if val == maxVal:
