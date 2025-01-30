@@ -7,23 +7,22 @@ class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         dummy = Trie()
         head = dummy
-
-        for let in strs[0]:
-            head.children[let] = Trie()
-            head = head.children[let]
+        
+        for l in strs[0]:
+            head.children[l] = Trie()
+            head = head.children[l]
         
         head.endOfWord = True
-
         ans = strs[0]
-        
+
         for word in strs[1:]:
             length_ = 0
             head = dummy
 
-            for c in word:
-                if c not in head.children:
+            for l in word:
+                if l not in head.children:
                     break
-                head = head.children[c]
+                head = head.children[l]
                 length_ += 1
             
             if not length_:
