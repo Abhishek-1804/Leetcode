@@ -3,20 +3,20 @@ class Solution:
 
         if n == 0:
             return 1
-        
+
         if n < 0:
             x = 1/x
             n = -n
-        
-        result = 1
+
+        ans = 1
 
         while n > 0:
             if n%2 == 0:
-                n /= 2
-                x **= 2
+                n //= 2
+                x *= x
             
             else:
-                result *= x
+                ans *= x
                 n -= 1
         
-        return result
+        return ans
