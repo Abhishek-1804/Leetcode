@@ -9,7 +9,6 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.count = 0
         self.h = {}
 
         self.head = Doubly(0, 0)
@@ -44,12 +43,12 @@ class LRUCache:
             node.v = value
 
         else:
-            if self.count == self.capacity:
+            if self.capacity == 0:
                 node = self.head.next
                 node.prev.next = node.next
                 node.next.prev = node.prev
                 del self.h[node.k]
-                self.count -= 1
+                self.capacity += 1
 
             node = Doubly(key, value)
             self.h[key] = node
@@ -58,7 +57,7 @@ class LRUCache:
             self.tail.prev = node
             node.next = self.tail
             node.v = value
-            self.count += 1
+            self.capacity -= 1
             
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
