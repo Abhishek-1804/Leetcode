@@ -1,27 +1,29 @@
 class Solution:
     def reorganizeString(self, s: str) -> str:
         
-        s_count = Counter(s)
+        answer = ''
+        freq = Counter(s)
+        maxHeap = [[-count, c] for c, count in freq.items()]
 
-        maxHeap = [[-cnt, char] for char, cnt in s_count.items()]
         heapq.heapify(maxHeap)
 
         prev = None
-        ans = ""
 
         while maxHeap or prev:
-            if prev and not maxHeap:
-                return ""
 
-            cnt, char = heapq.heappop(maxHeap)
+            if not maxHeap and prev:
+                return ''
+
+            cnt, c = heapq.heappop(maxHeap)
             cnt += 1
-            ans += char
+            answer += c
 
             if prev:
                 heapq.heappush(maxHeap, prev)
                 prev = None
             
-            if cnt != 0:
-                prev = [cnt, char]
+            if cnt < 0:
+                prev = [cnt, c]
         
-        return ans
+        return answer
+            
