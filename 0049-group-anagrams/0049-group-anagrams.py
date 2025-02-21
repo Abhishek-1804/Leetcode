@@ -4,9 +4,10 @@ class Solution:
         h = {}
 
         for word in strs:
-            if ''.join(sorted(word)) not in h:
-                h[''.join(sorted(word)) ] = []
-            h[''.join(sorted(word))].append(word)
+            sorted_word = ''.join(sorted(word))
+            if sorted_word not in h:
+                h[sorted_word] = []
+            h[sorted_word].append(word)
         
         ans = []
 
