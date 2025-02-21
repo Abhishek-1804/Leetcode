@@ -6,21 +6,24 @@ class Solution:
         for crs, pre in prerequisites:
             pre_to_crs[pre].append(crs)
 
-        seen = set()
+        # 0 - not visited
+        # 1 - visiting
+        # 2 - visited
+        states = [0]*numCourses
         
         def has_cycle(key):
-            if not pre_to_crs[key]:
+            if states[key] == 2:
                 return False
             
-            if key in seen:
+            if states[key] == 1:
                 return True
             
-            seen.add(key)
+            states[key] = 1
             for neighbor in pre_to_crs[key]:
                 if has_cycle(neighbor):
                     return True
-            seen.remove(key)
-            pre_to_crs[key] = []
+            
+            states[key] = 2
             return False
             
         for key, val in pre_to_crs.items():
