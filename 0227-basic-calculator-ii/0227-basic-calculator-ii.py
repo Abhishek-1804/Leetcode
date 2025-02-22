@@ -1,38 +1,22 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        import re
-
-        s = ''.join(s.split())
-        s = re.split(r'(\+|\-|\*|/)', s)
-
-        i = 0
+        num = 0
+        pre_op = '+'
         stack = []
 
-        while i < len(s):
-            if s[i].isnumeric():
-                stack.append(int(s[i]))
-                i += 1
-
-            else:
-                if s[i] == '+' or s[i] == '-':
-                    stack.append(s[i])
-                    i += 1
+        for i, c in enumerate(s):
+            if c.isdigit():
+                num = num * 10 + int(c)
+            if (not c.isdigit() and c != ' ') or i == len(s) - 1:
+                if pre_op == '+':
+                    stack.append(num)
+                elif pre_op == '-':
+                    stack.append(-num)
+                elif pre_op == '*':
+                    stack.append(stack.pop() * num)
+                elif pre_op == '/':
+                    stack.append(math.trunc(stack.pop() / num))
+                pre_op = c
+                num = 0
                 
-                elif s[i] == '/':
-                    stack.append(int(stack.pop() / int(s[i+1])))
-                    i += 2
-
-                elif s[i] == '*':
-                    stack.append(int(stack.pop() * int(s[i+1])))
-                    i += 2
-        
-        stack = stack[::-1]
-        ans = stack.pop()
-        while stack:
-            op = stack.pop()
-            if op == '+':
-                ans += stack.pop()
-            else:
-                ans -= stack.pop()
-        
-        return ans
+        return sum(stack)
