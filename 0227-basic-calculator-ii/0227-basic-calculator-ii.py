@@ -18,11 +18,11 @@ class Solution:
                     stack.append(s[i])
                     i += 1
                 
-                elif s[i] == '/' and stack:
+                elif s[i] == '/':
                     stack.append(int(stack.pop() / int(s[i+1])))
                     i += 2
 
-                elif s[i] == '*' and stack:
+                elif s[i] == '*':
                     stack.append(int(stack.pop() * int(s[i+1])))
                     i += 2
         
