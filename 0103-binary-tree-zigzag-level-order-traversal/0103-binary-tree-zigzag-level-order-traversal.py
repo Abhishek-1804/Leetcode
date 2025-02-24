@@ -6,48 +6,32 @@
 #         self.right = right
 class Solution:
     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
+        output = []
 
         if not root:
-            return []
+            return output
         
-        ans = [[root.val]]
-        queue = [root]
-        flag = True
+        q = collections.deque([])
+        q.append(root)
+        flag = False
 
-        while queue:
-            temp = []
-            q_len = len(queue)
-
-            if flag:
-                for _ in range(q_len):
-                    if queue[0].right:
-                        temp.append(queue[0].right.val)
-                        queue.append(queue[0].right)
-                    if queue[0].left:
-                        temp.append(queue[0].left.val)
-                        queue.append(queue[0].left)
-                    
-                    queue.pop(0)
-    
-                queue = queue[::-1]
-                flag = False
-
-            else:
-                for _ in range(q_len):
-                    if queue[0].left:
-                        temp.append(queue[0].left.val)
-                        queue.append(queue[0].left)
-                    if queue[0].right:
-                        temp.append(queue[0].right.val)
-                        queue.append(queue[0].right)
-                    
-                    queue.pop(0)
-    
-                queue = queue[::-1]
-                flag = True
+        while q:
+            n = len(q)
+            temp_arr = []
+            for _ in range(n):
+                node = q.popleft()
+                temp_arr.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
             
-            ans.append(temp)
+            if not flag:
+                output.append(temp_arr)
+                flag = True
+            else:
+                output.append(temp_arr[::-1])
+                flag = False
         
-        ans.pop()
-        return ans
-        
+        return output
