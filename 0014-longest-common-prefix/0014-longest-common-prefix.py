@@ -5,29 +5,28 @@ class Trie:
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        dummy = Trie()
-        head = dummy
-        
-        for l in strs[0]:
-            head.children[l] = Trie()
-            head = head.children[l]
+
+        dummy = head = Trie()
+
+        for c in strs[0]:
+            head.children[c] = Trie()
+            head = head.children[c]
         
         head.endOfWord = True
+
         ans = strs[0]
 
         for word in strs[1:]:
-            length_ = 0
             head = dummy
-
-            for l in word:
-                if l not in head.children:
+            temp_ans = ''
+            for c in word:
+                if c in head.children and not head.endOfWord:
+                    head = head.children[c]
+                    temp_ans += c
+                else:
                     break
-                head = head.children[l]
-                length_ += 1
             
-            if not length_:
-                return ""
-            
-            ans = ans[:length_]
+            head.endOfWord = True
+            ans = temp_ans
         
         return ans
