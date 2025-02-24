@@ -3,19 +3,18 @@ class Solution:
         
         output = []
 
-        o = c = n
-
-        def dfs(o, c, s):
-
+        def backtrack(o, c, temp_str):
             if o == 0 and c == 0:
-                output.append(s)
+                output.append(temp_str)
                 return
             
             if o > 0:
-                dfs(o-1, c, s+'(')
+                backtrack(o-1, c, temp_str + '(')
             
             if c > o:
-                dfs(o, c-1, s+')')
+                backtrack(o, c-1, temp_str + ')')
 
-        dfs(o, c, "")
+
+        backtrack(n, n, '')
+
         return output
