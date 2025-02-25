@@ -1,28 +1,27 @@
 class Solution:
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
         
-        webInfo = []
-        for u, t, w in zip(username, timestamp, website):
-            webInfo.append((u, t, w))
+        website_info = [[t, u, w] for u, t, w in zip(username, timestamp, website)]
+        website_info.sort()
         
-        webInfo.sort(key=lambda x : x[1])
+        h = {}
 
-        visits = defaultdict(list)
-        for u, _, w in webInfo:
-            visits[u].append(w)
+        for _, u, w in website_info:
+            if u not in h:
+                h[u] = []
+            h[u].append(w)
         
-        possibleTuples = defaultdict(int)
-        for u in visits:
-            webRoutes = set(combinations(visits[u], 3))
-            for webRoute in webRoutes:
-                possibleTuples[webRoute] += 1
+        patterns = {}
+        for key, val in h.items():
+            if len(val) < 3:
+                continue
+            seen = set()
+            for comb in combinations(val, 3):
+                if comb not in seen:
+                    patterns[comb] = patterns.get(comb, 0) + 1
+                    seen.add(comb)
         
-        maxVal, routes = max(possibleTuples.values()), []
-        for r, val in possibleTuples.items():
-            if maxVal == val:
-                routes.append(r)
+        max_count = max(patterns.values())
+        best_pattern = min([pattern for pattern, count in patterns.items() if count == max_count])
         
-        if len(routes) > 1:
-            routes.sort()
-        
-        return routes[0]
+        return list(best_pattern)
