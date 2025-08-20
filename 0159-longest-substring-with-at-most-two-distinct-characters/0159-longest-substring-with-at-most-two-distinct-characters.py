@@ -10,10 +10,9 @@ class Solution:
             char_ind[s[j]] = j
 
             if len(char_ind) > 2:
-                del_index = min(char_ind.values())
-                del_char = [c for c, idx in char_ind.items() if idx == del_index][0]
-                del char_ind[del_char]
-                i = del_index + 1
+                drop_char = min(char_ind, key=char_ind.get)
+                i = char_ind[drop_char] + 1
+                del char_ind[drop_char]
 
             answer = max(answer, j - i + 1)
 
