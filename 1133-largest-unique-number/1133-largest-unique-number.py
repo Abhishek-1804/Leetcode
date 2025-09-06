@@ -1,13 +1,20 @@
 class Solution:
     def largestUniqueNumber(self, nums: List[int]) -> int:
         
-        num_counts = {}
+        nums.sort(reverse = True)
+        n = len(nums)
 
-        for num in nums:
-            if num not in num_counts:
-                num_counts[num] = 1
-            else:
-                num_counts[num] += 1
+        if n == 1:
+            return nums[0]
         
-        filtered_d = [k for k, v in num_counts.items() if v == 1]
-        return max(filtered_d) if filtered_d else -1
+        pointer = 0
+        while pointer < n:
+            if pointer == n-1 or nums[pointer] != nums[pointer+1]:
+                return nums[pointer]
+            
+            while pointer < n-1 and nums[pointer] == nums[pointer+1]:
+                pointer += 1
+            
+            pointer += 1
+        
+        return -1
