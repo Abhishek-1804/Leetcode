@@ -11,16 +11,18 @@ class Solution:
 
         def is_unival_tree(node):
             nonlocal count
-            
+
             if not node:
                 return True
             
             left_uni = is_unival_tree(node.left)
             right_uni = is_unival_tree(node.right)
 
+            # you need both to be true; thats the definition of subtree
             if not left_uni or not right_uni:
                 return False
             
+            # now we check if root.val matches the nodes
             if node.left and node.left.val != node.val:
                 return False
 
