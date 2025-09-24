@@ -7,22 +7,20 @@
 class Solution:
     def maximumAverageSubtree(self, root: Optional[TreeNode]) -> float:
         
-        max_avg = 0
+        self.max_avg = float('-inf')  # Global variable
 
         def dfs(node):
 
-            nonlocal max_avg
-            
             if not node:
                 return 0, 0 # curr sum, number of nodes
             
             left_sum, left_nodes = dfs(node.left)
             right_sum, right_nodes = dfs(node.right)
 
-            max_avg = max(max_avg, (node.val + left_sum + right_sum) / (1 + left_nodes + right_nodes))
+            self.max_avg = max(self.max_avg, (node.val + left_sum + right_sum) / (1 + left_nodes + right_nodes))
 
             return left_sum + right_sum + node.val, 1 + left_nodes + right_nodes
         
         dfs(root)
 
-        return max_avg
+        return self.max_avg
