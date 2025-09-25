@@ -6,6 +6,8 @@
 #         self.right = right
 class Solution:
     def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
+        d = {}
+
         def search(root, val):
             if not root:
                 return False
@@ -20,7 +22,9 @@ class Solution:
             if not root1:
                 return False
             # search for complement in root2
-            if search(root2, target - root1.val):
+            if root1 not in d:
+                d[root1] = search(root2, target - root1.val)
+            if d[root1]:
                 return True
             # traverse both subtrees
             return traverse(root1.left) or traverse(root1.right)
