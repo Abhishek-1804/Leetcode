@@ -6,27 +6,21 @@
 #         self.right = right
 class Solution:
     def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
-        d = {}
 
-        def search(root, val):
-            if not root:
+        def dfs(node, node_set):
+            if not node:
                 return False
-            if root.val == val:
-                return True
-            elif val < root.val:
-                return search(root.left, val)
-            else:
-                return search(root.right, val)
-        
-        def traverse(root1):
-            if not root1:
-                return False
-            # search for complement in root2
-            if root1 not in d:
-                d[root1] = search(root2, target - root1.val)
-            if d[root1]:
-                return True
-            # traverse both subtrees
-            return traverse(root1.left) or traverse(root1.right)
+            dfs(node.left, node_set)
+            node_set.add(node.val)
+            dfs(node.right, node_set)
 
-        return traverse(root1)
+        node_set1 = set()
+        node_set2 = set()
+
+        dfs(root1, node_set1)
+        dfs(root2, node_set2)
+
+        for val1 in node_set1:
+            if target - val1 in node_set2:
+                return True
+        return False
