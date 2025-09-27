@@ -2,7 +2,7 @@ class Solution:
     def killProcess(self, pid: List[int], ppid: List[int], kill: int) -> List[int]:
         from collections import deque, defaultdict
 
-        parent_to_child = defaultdict(list
+        parent_to_child = defaultdict(list)
         output = []
 
         for i in range(len(ppid)):
