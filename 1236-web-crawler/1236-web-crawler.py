@@ -9,22 +9,20 @@
 #        :rtype List[str]
 #        """
 
+from urllib.parse import urlparse
+from collections import deque
+
 class Solution:
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
-        from urllib.parse import urlparse
-
         output = set()
         start_host = urlparse(startUrl).hostname
+        queue = deque([startUrl])
 
-        stack = [startUrl]
-        while stack:
-            url = stack.pop()
-            if url in output:
-                continue
-            output.add(url)
-            for next_urls in htmlParser.getUrls(url):
-                if urlparse(next_urls).hostname == start_host:
-                    if next_urls not in stack:
-                        stack.append(next_urls)
-        
+        output.add(startUrl)
+        while queue:
+            url = queue.popleft()
+            for next_url in htmlParser.getUrls(url):
+                if urlparse(next_url).hostname == start_host and next_url not in output:
+                    output.add(next_url)
+                    queue.append(next_url)
         return list(output)
