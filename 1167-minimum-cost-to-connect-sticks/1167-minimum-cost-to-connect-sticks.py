@@ -4,10 +4,6 @@ class Solution:
 
         cost = 0
         n = len(sticks)
-
-        if n < 2:
-            return cost
-
         heapq.heapify(sticks)
 
         while n >= 2:
