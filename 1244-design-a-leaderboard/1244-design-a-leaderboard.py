@@ -1,26 +1,18 @@
 import heapq
-class Leaderboard:
 
+class Leaderboard:
     def __init__(self):
         self.leaderboard = {}
-        
+
     def addScore(self, playerId: int, score: int) -> None:
         if playerId not in self.leaderboard:
             self.leaderboard[playerId] = 0
         self.leaderboard[playerId] += score
 
     def top(self, K: int) -> int:
-        total = 0
-
-        items = list(self.leaderboard.items())
-        temp_list = [(v, k) for k, v in items]
-        temp_list.sort(reverse = True)
-
-        for i in range(K):
-            total += temp_list[i][0]
-        
-        return total
-
+        # heapq.nlargest returns the K largest elements from the iterable
+        return sum(heapq.nlargest(K, self.leaderboard.values()))
+    
     def reset(self, playerId: int) -> None:
         self.leaderboard[playerId] = 0
         
