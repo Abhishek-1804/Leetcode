@@ -4,7 +4,7 @@ class ZigzagIterator:
     def __init__(self, v1: List[int], v2: List[int]):
         self.v1 = v1
         self.v2 = v2
-        self.turn = 0  # 0 for v1, 1 for v2
+        self.turn = 0
 
     def next(self) -> int:
         if not self.hasNext():
