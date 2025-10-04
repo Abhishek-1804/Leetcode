@@ -1,20 +1,18 @@
 from typing import List
+import math
 
 class Solution:
     def getFactors(self, n: int) -> List[List[int]]:
         output = []
 
-        def backtrack(start, n, ans):
-            # Add current combination if valid
-            if ans and n >= start:
-                output.append(ans + [n])
+        def backtrack(start, remaining, ans):
+            if ans and remaining >= start:
+                output.append(ans + [remaining])
             
-            # Continue exploring factors (not else - always explore!)
-            i = start
-            while i * i <= n:
-                if n % i == 0:
-                    backtrack(i, n // i, ans + [i])
-                i += 1
+            # if we go beyond sqrt(n), we start repeating values
+            for i in range(start, int(math.sqrt(remaining)) + 1):
+                if remaining % i == 0:
+                    backtrack(i, remaining // i, ans + [i])
 
         backtrack(2, n, [])
         return output
