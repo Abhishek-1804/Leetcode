@@ -13,11 +13,11 @@ class Solution:
 
                 options = s[ind+1:end].split(',')
 
-                for op in options:
+                for op in sorted(options):
                     backtrack(end + 1, temp_str+op)
             else:
                 backtrack(ind+1, temp_str+s[ind])
 
         backtrack(0, "")
 
-        return sorted(output)
+        return options
