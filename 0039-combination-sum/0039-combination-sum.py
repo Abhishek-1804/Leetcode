@@ -3,19 +3,18 @@ class Solution:
         
         output = []
 
-        def backtrack(start, temp_arr, temp_sum):
-            if temp_sum > target:
-                return
-
-            if temp_sum == target:
-                output.append(temp_arr[:])
+        def backtrack(total, temp_list, start):
+            if total == target:
+                output.append(temp_list[:])
                 return
             
-            for j in range(start, len(candidates)):
-                temp_arr.append(candidates[j])
-                backtrack(j, temp_arr, temp_sum + candidates[j])
-                temp_arr.pop()
+            for i in range(start, len(candidates)):
+                total += candidates[i]
+                if total <= target:
+                    temp_list.append(candidates[i])
+                    backtrack(total, temp_list, i)
+                    temp_list.pop()
+                total -= candidates[i]
 
-        # iterator for candidates, temp_arr, temp_sum
         backtrack(0, [], 0)
         return output
