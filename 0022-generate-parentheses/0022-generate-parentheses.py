@@ -3,18 +3,19 @@ class Solution:
         
         output = []
 
-        def backtrack(o, c, temp_str):
+
+        def backtrack(temp_str, o, c):
             if o == 0 and c == 0:
                 output.append(temp_str)
                 return
             
             if o > 0:
-                backtrack(o-1, c, temp_str + '(')
-            
-            if c > o:
-                backtrack(o, c-1, temp_str + ')')
+                backtrack(temp_str + '(', o-1, c)
+                
+            if c > 0 and o < c:
+                backtrack(temp_str + ')', o, c-1)
 
 
-        backtrack(n, n, '')
+        backtrack("", n, n)
 
         return output
