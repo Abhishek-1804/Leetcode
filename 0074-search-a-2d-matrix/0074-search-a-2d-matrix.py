@@ -15,15 +15,17 @@ class Solution:
                 end = mid - 1
         
         row = mid
+
         start = 0
         end = len(matrix[0]) - 1
 
         while start <= end:
             mid = (start + end) // 2
+            mid_number = matrix[row][mid]
 
-            if target == matrix[row][mid]:
+            if target == mid_number:
                 return True
-            elif target < matrix[row][mid]:
+            elif target < mid_number:
                 end = mid - 1
             else:
                 start = mid + 1
