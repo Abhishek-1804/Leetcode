@@ -9,6 +9,7 @@ class Solution:
             if start == len(s):
                 output.append(path[:])
                 return
+
             for end in range(start, len(s)):
                 if is_palindrome(s[start:end+1]):
                     backtrack(end+1, path + [s[start:end+1]])
