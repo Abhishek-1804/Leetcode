@@ -6,6 +6,30 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+
+        return self.rightSideView_dfs(root)
+        # return self.rightSideView_bfs(root)
+        
+    def rightSideView_dfs(self, root: Optional[TreeNode]) -> List[int]:
+        output = []
+        
+        def dfs(node, depth):
+            if not node:
+                return
+            
+            # First time visiting this depth level
+            if depth == len(output):
+                output.append(node.val)
+            
+            # Visit right first, then left
+            dfs(node.right, depth + 1)
+            dfs(node.left, depth + 1)
+        
+        dfs(root, 0)
+        return output
+
+
+    def rightSideView_bfs(self, root: Optional[TreeNode]) -> List[int]:
         from collections import deque
         
         output = []
