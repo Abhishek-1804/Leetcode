@@ -12,11 +12,10 @@ class Solution:
                 elif col == 0:
                     dp[row][col] = row
                 
-                else:
-                    if word1[col-1] == word2[row-1]:
-                        dp[row][col] = dp[row-1][col-1]
+                elif word1[col-1] == word2[row-1]:
+                    dp[row][col] = dp[row-1][col-1]
                     
-                    else:
-                        dp[row][col] = min(dp[row-1][col] + 1, dp[row][col-1] + 1, dp[row-1][col-1] + 1)
+                else:
+                    dp[row][col] = min(dp[row-1][col] + 1, dp[row][col-1] + 1, dp[row-1][col-1] + 1)
         
         return dp[-1][-1]
