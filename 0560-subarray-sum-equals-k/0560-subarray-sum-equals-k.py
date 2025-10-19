@@ -1,15 +1,12 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        output = 0
-        prefix_map = {0: 1}
-        temp_sum = 0
-        
+        count = 0
+        prefix_sum = 0
+        prefix_counts = {0: 1}  # empty prefix sum base case
+
         for num in nums:
-            temp_sum += num
-            # Check if there is a prefix sum that when removed from temp_sum equals k
-            if temp_sum - k in prefix_map:
-                output += prefix_map[temp_sum - k]
-            # Update the count of temp_sum in the map
-            prefix_map[temp_sum] = prefix_map.get(temp_sum, 0) + 1
-        
-        return output
+            prefix_sum += num
+            if prefix_sum - k in prefix_counts:
+                count += prefix_counts[prefix_sum - k]
+            prefix_counts[prefix_sum] = prefix_counts.get(prefix_sum, 0) + 1
+        return count
