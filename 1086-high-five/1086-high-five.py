@@ -8,15 +8,11 @@ class Solution:
             if id_ not in avg_scores:
                 avg_scores[id_] = []
             
-            if len(avg_scores[id_]) < 5:
-                heapq.heappush(avg_scores[id_], score)
+            heapq.heappush(avg_scores[id_], score)
 
-            elif len(avg_scores[id_]) == 5 and score > avg_scores[id_][0]:
+            if len(avg_scores[id_]) > 5:
                 heapq.heappop(avg_scores[id_])
                 heapq.heappush(avg_scores[id_], score)
-            
-            else:
-                continue
         
         output = []
 
