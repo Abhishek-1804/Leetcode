@@ -1,27 +1,26 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        from collections import deque
         
-        islands = 0
-
-        q = deque([])
         rows, cols = len(grid), len(grid[0])
 
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        total = 0
+        q = deque([])
+        directions = ((0,1), (1, 0), (-1, 0), (0, -1))
 
         for row in range(rows):
             for col in range(cols):
                 if grid[row][col] == '1':
                     q.append((row, col))
-                    grid[row][col] = '0'
+                    grid[row][col] = '#'
                     while q:
                         r, c = q.popleft()
                         for dr, dc in directions:
-                            nr, nc = dr + r, dc + c
+                            nr, nc = r + dr, c + dc
                             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':
+                                grid[nr][nc] = '#'
                                 q.append((nr, nc))
-                                grid[nr][nc] = '0'
                     
-                    islands += 1
+                    total += 1
         
-        return islands
-
+        return total
