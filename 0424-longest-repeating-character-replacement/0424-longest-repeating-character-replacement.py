@@ -1,19 +1,16 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-
-        h = collections.defaultdict(int)
-        max_count = 0  # To store the max frequency of a character in the window
-        max_len = 0
-        left = 0
-
-        for right in range(len(s)):
-            h[s[right]] += 1
-            max_count = max(max_count, h[s[right]])
-
-            if (right-left+1)-max_count > k:
-                h[s[left]] -= 1
-                left += 1
-            
-            max_len = max(max_len, right - left + 1)
-        
-        return max_len
+        n = len(s)
+        h = {}
+        answer = 0
+        start = 0
+        for end in range(n):
+            h[s[end]] = h.get(s[end], 0) + 1
+            window_len = end - start + 1
+            most_freq_val = max(h.values())
+            if window_len - most_freq_val <= k:
+                answer = max(answer, window_len)
+            else:
+                h[s[start]] -= 1
+                start += 1
+        return answer
