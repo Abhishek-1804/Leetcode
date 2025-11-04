@@ -1,24 +1,28 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        stack = []  # Store indices
+        return self.trap_stack(height)
+
+    def trap_stack(self, height: List[int]) -> int:
+
         answer = 0
-        
+
+        # stores indicies
+        stack = []
+
         for i in range(len(height)):
-            # While current bar is taller than stack base
-            while stack and height[i] > height[stack[-1]]:
-                base = stack.pop()  # This is the bottom/valley
-                
-                if not stack:  # No left boundary
+
+            while stack and height[i] >= height[stack[-1]]:
+                base = stack.pop()
+
+                if not stack:
                     break
                 
-                # Distance between left and right boundaries
-                distance = i - stack[-1] - 1
-                
-                # Water height is bounded by shorter wall minus valley depth
-                bounded_height = min(height[i], height[stack[-1]]) - height[base]
-                
+                left = stack[-1]
+                distance = i - left - 1
+                bounded_height = min(height[i], height[left]) - height[base]
                 answer += distance * bounded_height
-            
+
+            # for decreasing heights
             stack.append(i)
         
         return answer
