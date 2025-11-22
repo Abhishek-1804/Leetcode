@@ -8,11 +8,11 @@ class Solution:
         if n == 2:
             return k * k
         
-        dp = [0 for _ in range(n + 1)]
-        dp[1] = k
-        dp[2] = k * k
+        dp = [0 for _ in range(n)]
+        dp[0] = k
+        dp[1] = k * k
         
-        for i in range(3, n + 1):
+        for i in range(2, n):
             dp[i] = (dp[i-1] + dp[i-2]) * (k - 1)
         
-        return dp[n]
+        return dp[n-1]
